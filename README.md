@@ -1,11 +1,7 @@
----
-title: VoiceRSS
-description: Instructions on how to setup VoiceRSS TTS with Home Assistant.
-ha_category:
-  - Text-to-speech
-ha_release: 0.35
-ha_domain: voicerss
----
+This is a fork of Home Assistant's built-in VoiceRSS component as a custom component, with extra options for speech rate and language voice.
+I submitted this as a PR originally, but they rejected it because the component doesn't contain a config_flow, well, all I did was to add some more functionality, but I didn't engage into rewriting the whole thing just because of this.
+
+Adding this as a custom component to your Home Assistant instance will override the internal component with the same name so you can still use it as before, with the extended functionality as below.
 
 The `voicerss` text-to-speech platform uses [VoiceRSS](http://www.voicerss.org/) Text-to-Speech engine to read a text with natural sounding voices.
 
@@ -19,8 +15,8 @@ tts:
   - platform: voicerss
     api_key: YOUR_API_KEY
 ```
-
-{% configuration %}
+Configuration options:
+```
 api_key:
   description: The API Key for VoiceRSS.
   required: true
@@ -50,7 +46,7 @@ speed:
   required: false
   type: string
   default: " 0 "
-{% endconfiguration %}
+```
 
 Languages supported: 
 `ar-eg, ar-sa, bg-bg, ca-es, zh-cn, zh-hk, zh-tw, hr-hr, cs-cz, da-dk, nl-be, nl-nl, en-au, en-ca, en-gb, en-in, en-ie, en-us, fi-fi, fr-ca, fr-fr, fr-ch, de-at, de-de, de-ch, el-gr, he-il, hi-in, hu-hu, id-id, it-it, ja-jp, ko-kr, ms-my, nb-no, pl-pl, pt-br, pt-pt, ro-ro, ru-ru, sk-sk, sl-si, es-mx, es-es, sv-se, ta-in, th-th, tr-tr, vi-vn`
