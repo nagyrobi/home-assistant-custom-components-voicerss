@@ -14,6 +14,11 @@ To enable text-to-speech with VoiceRSS, add the following lines to your `configu
 tts:
   - platform: voicerss
     api_key: YOUR_API_KEY
+    language: en-gb
+    codec: aac
+    format: '44khz_16bit_mono'
+    speed: '-2'
+    voice: Nancy
 ```
 Configuration options:
 ```
@@ -54,21 +59,5 @@ Languages supported:
 Codecs supported: `8khz_8bit_mono, 8khz_8bit_stereo, 8khz_16bit_mono, 8khz_16bit_stereo, 11khz_8bit_mono, 11khz_8bit_stereo, 11khz_16bit_mono, 11khz_16bit_stereo, 12khz_8bit_mono, 12khz_8bit_stereo, 12khz_16bit_mono, 12khz_16bit_stereo, 16khz_8bit_mono, 16khz_8bit_stereo, 16khz_16bit_mono, 16khz_16bit_stereo, 22khz_8bit_mono, 22khz_8bit_stereo, 22khz_16bit_mono, 22khz_16bit_stereo, 24khz_8bit_mono, 24khz_8bit_stereo, 24khz_16bit_mono, 24khz_16bit_stereo, 32khz_8bit_mono, 32khz_8bit_stereo, 32khz_16bit_mono, 32khz_16bit_stereo, 44khz_8bit_mono, 44khz_8bit_stereo, 44khz_16bit_mono, 44khz_16bit_stereo, 48khz_8bit_mono, 48khz_8bit_stereo, 48khz_16bit_mono, 48khz_16bit_stereo, alaw_8khz_mono, alaw_8khz_stereo, alaw_11khz_mono, alaw_11khz_stereo, alaw_22khz_mono, alaw_22khz_stereo, alaw_44khz_mono, alaw_44khz_stereo, ulaw_8khz_mono, ulaw_8khz_stereo, ulaw_11khz_mono, ulaw_11khz_stereo, ulaw_22khz_mono, ulaw_22khz_stereo, ulaw_44khz_mono, ulaw_44khz_stereo`
 
 Check the [VoiceRSS API documentation](http://www.voicerss.org/api/) for language-specific voice values.
-
-## Full configuration example
-
-The configuration sample below shows how an entry can look like:
-
-```yaml
-# Example configuration.yaml entry
-tts:
-  - platform: voicerss
-    api_key: YOUR_API_KEY
-    language: en-gb
-    codec: aac
-    format: '44khz_16bit_mono'
-    speed: '-2'
-    voice: Nancy
-```
 
 Please note, some media_players require a certain format. For example Sonos or Linkplay require a format of '44khz_16bit_stereo'.
