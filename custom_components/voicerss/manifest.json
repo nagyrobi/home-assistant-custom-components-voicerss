@@ -1,6 +1,7 @@
 {
   "domain": "voicerss",
   "name": "VoiceRSS",
+  "version": "v1.00",
   "documentation": "https://www.home-assistant.io/integrations/voicerss",
   "config_flow": false,
   "codeowners": [
