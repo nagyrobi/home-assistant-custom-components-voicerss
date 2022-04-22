@@ -25,6 +25,7 @@ tts:
     format: '44khz_16bit_mono'
     speed: '-2'
     voice: Nancy
+    delay: 1000
 ```
 Configuration options:
 ```
