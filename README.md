@@ -1,4 +1,10 @@
-This is a fork of Home Assistant's built-in VoiceRSS component as a custom component, with extra options for speech rate and language voice.
+This is a fork of Home Assistant's built-in VoiceRSS component as a custom component, with extra options :
+- prepending delay 
+- speech rate 
+- language voice.
+
+Many people complain about network media players cutting down the first bits of the TTS audio because their devices need a little time to wake up from standby or idle state when they receive a network stream to play. The only good solution for this is to add a configurable amount of silence at the beginning of the audio stream. The proposed solution does this locally, and the generated files stay like that in the cache.
+
 I submitted this as a PR originally, but they rejected it because the component doesn't contain a config_flow, well, all I did was to add two more options to the config, but I didn't engage into rewriting the whole thing just because somebody didn't create a flow for it - nevertheless, the component still functions as is.
 
 Adding this as a custom component to your Home Assistant instance will override the internal component with the same name so you can still use it as before, with the extended functionality as below.
@@ -51,12 +57,16 @@ speed:
   required: false
   type: string
   default: " 0 "
+delay:
+  description: "Prepend the generated speech with this amount of silence (miliseconds)."
+  required: false
+  type: int
+  default: 0
 ```
 
-Languages supported: 
-`ar-eg, ar-sa, bg-bg, ca-es, zh-cn, zh-hk, zh-tw, hr-hr, cs-cz, da-dk, nl-be, nl-nl, en-au, en-ca, en-gb, en-in, en-ie, en-us, fi-fi, fr-ca, fr-fr, fr-ch, de-at, de-de, de-ch, el-gr, he-il, hi-in, hu-hu, id-id, it-it, ja-jp, ko-kr, ms-my, nb-no, pl-pl, pt-br, pt-pt, ro-ro, ru-ru, sk-sk, sl-si, es-mx, es-es, sv-se, ta-in, th-th, tr-tr, vi-vn`
+With the `delay` option you can add some silence to the beginning of the rendered speech, to cope with audio systems which need time to wake up their speakers when starting a network stream. Value is in miliseconds, maximum is 15000 (15s).
 
-Codecs supported: `8khz_8bit_mono, 8khz_8bit_stereo, 8khz_16bit_mono, 8khz_16bit_stereo, 11khz_8bit_mono, 11khz_8bit_stereo, 11khz_16bit_mono, 11khz_16bit_stereo, 12khz_8bit_mono, 12khz_8bit_stereo, 12khz_16bit_mono, 12khz_16bit_stereo, 16khz_8bit_mono, 16khz_8bit_stereo, 16khz_16bit_mono, 16khz_16bit_stereo, 22khz_8bit_mono, 22khz_8bit_stereo, 22khz_16bit_mono, 22khz_16bit_stereo, 24khz_8bit_mono, 24khz_8bit_stereo, 24khz_16bit_mono, 24khz_16bit_stereo, 32khz_8bit_mono, 32khz_8bit_stereo, 32khz_16bit_mono, 32khz_16bit_stereo, 44khz_8bit_mono, 44khz_8bit_stereo, 44khz_16bit_mono, 44khz_16bit_stereo, 48khz_8bit_mono, 48khz_8bit_stereo, 48khz_16bit_mono, 48khz_16bit_stereo, alaw_8khz_mono, alaw_8khz_stereo, alaw_11khz_mono, alaw_11khz_stereo, alaw_22khz_mono, alaw_22khz_stereo, alaw_44khz_mono, alaw_44khz_stereo, ulaw_8khz_mono, ulaw_8khz_stereo, ulaw_11khz_mono, ulaw_11khz_stereo, ulaw_22khz_mono, ulaw_22khz_stereo, ulaw_44khz_mono, ulaw_44khz_stereo`
+When `delay` is set, the audio stream is sent to the player in uncompressed `wav` format to preserve audio quality (avoid recompression). Without `delay` set, the stream is sent unmodified, in its original format.
 
 Check the [VoiceRSS API documentation](http://www.voicerss.org/api/) for language-specific voice values.
 
