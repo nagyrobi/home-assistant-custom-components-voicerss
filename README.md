@@ -7,7 +7,7 @@ This is a fork of Home Assistant's built-in VoiceRSS component as a custom compo
 
 Many people complain about network media players cutting down the first bits of the TTS audio because their devices need a little time to wake up from standby or idle state when they receive a network stream to play. The only good solution for this is to add a configurable amount of silence at the beginning of the audio stream. The proposed solution does this locally, and the generated files stay like that in the cache.
 
-I submitted this as a PR originally, but they rejected it because the component doesn't contain a config_flow, well, all I did was to add two more options to the config, but I didn't engage into rewriting the whole thing just because somebody didn't create a flow for it - nevertheless, the component still functions as is.
+I submitted this as a PR originally, but they rejected it because the component doesn't contain a config_flow, well, all I did back then was to add two more options to the config, but I didn't engage into rewriting the whole thing just because somebody didn't create a flow for it - nevertheless, the component still functions as is.
 
 Adding this as a custom component to your Home Assistant instance will override the internal component with the same name so you can still use it as before, with the extended functionality as below.
 
