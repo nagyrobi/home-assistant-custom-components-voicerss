@@ -1,3 +1,5 @@
+# VoiceRSS TTS - with extra prepending delay, speech rate and language voice
+
 This is a fork of Home Assistant's built-in VoiceRSS component as a custom component, with extra options :
 - prepending a silence delay to the audio stream
 - speech rate (aka speed)
