@@ -1,13 +1,16 @@
 """Support for the voicerss speech service."""
 import asyncio
+from http import HTTPStatus
 import logging
 
 import aiohttp
 import async_timeout
 import voluptuous as vol
+from pydub import AudioSegment
+from io import BytesIO
 
 from homeassistant.components.tts import CONF_LANG, PLATFORM_SCHEMA, Provider
-from homeassistant.const import CONF_API_KEY, HTTP_OK
+from homeassistant.const import CONF_API_KEY
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
 
@@ -164,11 +167,13 @@ CONF_CODEC = "codec"
 CONF_FORMAT = "format"
 CONF_VOICE = "voice"
 CONF_RATE = "speed"
+CONF_DELAY = "delay"
 
 DEFAULT_LANG = "en-us"
 DEFAULT_CODEC = "mp3"
-DEFAULT_FORMAT = "8khz_8bit_mono"
+DEFAULT_FORMAT = "16khz_16bit_mono"
 DEFAULT_RATE = "0"
+DEFAULT_DELAY = 0
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -179,6 +184,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_FORMAT, default=DEFAULT_FORMAT): vol.In(SUPPORT_FORMATS),
         vol.Optional(CONF_RATE, default=DEFAULT_RATE): vol.In(SUPPORT_RATE),
         vol.Optional(CONF_VOICE, default="unconfigured"): cv.string,
+        vol.Optional(CONF_DELAY, default=DEFAULT_DELAY): vol.All(int, vol.Range(min=0, max=15000)),
     }
 )
 
@@ -196,6 +202,7 @@ class VoiceRSSProvider(Provider):
         self.hass = hass
         self._extension = conf[CONF_CODEC]
         self._lang = conf[CONF_LANG]
+        self._delay = conf[CONF_DELAY]
         self.name = "VoiceRSS"
 
         self._form_data = {
@@ -232,7 +239,7 @@ class VoiceRSSProvider(Provider):
             with async_timeout.timeout(10):
                 request = await websession.post(VOICERSS_API_URL, data=form_data)
 
-                if request.status != HTTP_OK:
+                if request.status != HTTPStatus.OK:
                     _LOGGER.error(
                         "Error %d on load url %s", request.status, request.url
                     )
@@ -247,4 +254,12 @@ class VoiceRSSProvider(Provider):
             _LOGGER.error("Timeout for VoiceRSS API")
             return (None, None)
 
-        return (self._extension, data)
+        if self._delay != 0:
+            as_tts = AudioSegment.from_file(BytesIO(data), self._extension)
+            as_sil = AudioSegment.silent(duration=self._delay, frame_rate=as_tts.frame_rate)
+            as_out = as_sil + as_tts
+            output=BytesIO()
+            as_out.export(output, format="wav")
+            return ("wav", output.getvalue())
+        else:
+            return (self._extension, data)
