@@ -1,0 +1,7 @@
+{
+  "name": "VoiceRSS TTS with delay",
+  "content_in_root": false,
+  "render_readme": false,
+  "domains": ["tts"],
+  "homeassistant": "2022.4.0"
+}
