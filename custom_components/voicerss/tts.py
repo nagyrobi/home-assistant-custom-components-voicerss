@@ -203,7 +203,7 @@ class VoiceRSSProvider(Provider):
         self._extension = conf[CONF_CODEC]
         self._lang = conf[CONF_LANG]
         self._delay = conf[CONF_DELAY]
-        self.name = "VoiceRSS"
+        self.name = "VoiceRSS (custom)"
 
         self._form_data = {
             "key": conf[CONF_API_KEY],
