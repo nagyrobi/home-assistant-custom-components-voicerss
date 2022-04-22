@@ -1,10 +1,13 @@
 {
   "domain": "voicerss",
   "name": "VoiceRSS",
-  "version": "v1.00",
+  "version":"3.1.1",
   "documentation": "https://www.home-assistant.io/integrations/voicerss",
-  "config_flow": false,
-  "codeowners": [
-    "@nagyrobi"
+  "codeowners": [],
+  "iot_class": "cloud_push",
+  "requirements": [
+    "pydub~=0.25"
   ]
 }
+  
+  
